@@ -1,3 +1,4 @@
+cat > Jenkinsfile << 'EOF'
 pipeline {
     agent { label 'python' }
 
@@ -21,6 +22,7 @@ pipeline {
         stage('Create .env') {
             steps {
                 sh '''
+                    set +x
                     echo "BROWSERSTACK_USERNAME=${BROWSERSTACK_USERNAME}" > .env
                     echo "BROWSERSTACK_ACCESS_KEY=${BROWSERSTACK_ACCESS_KEY}" >> .env
                 '''
@@ -31,7 +33,7 @@ pipeline {
             steps {
                 sh '''
                     . .venv/bin/activate
-                    python -m pytest tests --platform android
+                    python -m pytest tests/android --platform android
                 '''
             }
         }
@@ -40,9 +42,10 @@ pipeline {
             steps {
                 sh '''
                     . .venv/bin/activate
-                    python -m pytest tests --platform ios || true
+                    python -m pytest tests/ios --platform ios || true
                 '''
             }
         }
     }
 }
+EOF
