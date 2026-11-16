@@ -32,7 +32,7 @@ pipeline {
             steps {
                 sh '''
                     . .venv/bin/activate
-                    python -m pytest tests/android --platform android
+                    python -m pytest tests/android --platform android --alluredir=allure-results
                 '''
             }
         }
@@ -41,9 +41,23 @@ pipeline {
             steps {
                 sh '''
                     . .venv/bin/activate
-                    python -m pytest tests/ios --platform ios || true
+                    python -m pytest tests/ios --platform ios --alluredir=allure-results || true
                 '''
             }
+        }
+
+        stage('Generate Allure report') {
+            steps {
+                sh '''
+                    npx --yes allure-commandline generate allure-results --clean -o allure-report
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'allure-report/**', fingerprint: true
         }
     }
 }
