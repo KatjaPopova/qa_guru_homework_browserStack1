@@ -1,4 +1,3 @@
-cat > Jenkinsfile << 'EOF'
 pipeline {
     agent { label 'python' }
 
@@ -48,4 +47,3 @@ pipeline {
         }
     }
 }
-EOF
