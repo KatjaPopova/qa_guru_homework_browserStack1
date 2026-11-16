@@ -45,19 +45,11 @@ pipeline {
                 '''
             }
         }
-
-        stage('Generate Allure report') {
-            steps {
-                sh '''
-                    npx --yes allure-commandline generate allure-results --clean -o allure-report
-                '''
-            }
-        }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'allure-report/**', fingerprint: true
+            allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
         }
     }
 }
