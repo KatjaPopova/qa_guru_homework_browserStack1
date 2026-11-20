@@ -1,3 +1,4 @@
+import allure
 import pytest
 from appium import webdriver
 from appium.options.android import UiAutomator2Options
@@ -45,5 +46,10 @@ def driver(request):
     )
 
     drv = webdriver.Remote(remote_url, options=options)
+
+    session_id = drv.session_id
+    dashboard_link = f"https://app-automate.browserstack.com/dashboard/v2/sessions/{session_id}"
+    allure.dynamic.link(dashboard_link, name="BrowserStack session (видео, логи)")
+
     yield drv
     drv.quit()
