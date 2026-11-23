@@ -2,4 +2,5 @@
 .venv
 __pycache__/
 *.pyc
-.idea/
+.idea/allure-results/
+allure-report/

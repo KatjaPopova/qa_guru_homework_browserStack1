@@ -4,3 +4,4 @@ pydantic-settings>=2.4.0
 allure-pytest>=2.13.0
 
 allure-python-commons
+requests>=2.31.0
